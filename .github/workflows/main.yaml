@@ -9,32 +9,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          flutter-version: '3.24.5'
       - name: Create Android Project Files
         run: flutter create .
       - name: Get Dependencies
         run: flutter pub get
-      - name: Force All Subprojects to SDK 37 & Fix JCenter
+      - name: Configure Android SDK 34 & Fix JCenter
         run: |
           find /home/runner/.pub-cache -name "build.gradle" -exec sed -i 's/jcenter()/mavenCentral()/g' {} +
-          cat << 'EOF' >> android/build.gradle.kts
-          subprojects {
-              plugins.withId("com.android.library") {
-                  extensions.configure<com.android.build.gradle.LibraryExtension>("android") {
-                      compileSdk = 37
-                      defaultConfig {
-                          minSdk = 24
-                      }
-                  }
-              }
-          }
-          EOF
-          if [ -f android/app/build.gradle.kts ]; then
-            sed -i 's/minSdk = flutter.minSdkVersion/minSdk = 24/g' android/app/build.gradle.kts
-            sed -i 's/compileSdk = flutter.compileSdkVersion/compileSdk = 37/g' android/app/build.gradle.kts
-            sed -i 's/targetSdk = flutter.targetSdkVersion/targetSdk = 34/g' android/app/build.gradle.kts
+          if [ -f android/app/build.gradle ]; then
+            sed -i 's/minSdkVersion flutter.minSdkVersion/minSdkVersion 24/g' android/app/build.gradle
+            sed -i 's/compileSdkVersion flutter.compileSdkVersion/compileSdkVersion 34/g' android/app/build.gradle
+            sed -i 's/targetSdkVersion flutter.targetSdkVersion/targetSdkVersion 34/g' android/app/build.gradle
           fi
       - name: Build Debug APK
         run: flutter build apk --debug
@@ -43,3 +35,4 @@ jobs:
         with:
           name: my-imo-app-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
+          
