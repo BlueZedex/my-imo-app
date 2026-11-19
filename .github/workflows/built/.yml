@@ -1,0 +1,20 @@
+name: Build Group Call APK
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.5'
+      - name: Build APK
+        working-directory: group_call
+        run: |
+          flutter pub get
+          flutter build apk --debug
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: zego-group-call-app
+          path: group_call/build/app/outputs/flutter-apk/app-debug.apk
