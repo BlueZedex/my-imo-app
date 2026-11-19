@@ -21,13 +21,11 @@ jobs:
           find /home/runner/.pub-cache -name "build.gradle" -exec sed -i 's/jcenter()/mavenCentral()/g' {} +
           cat << 'EOF' >> android/build.gradle.kts
           subprojects {
-              afterEvaluate {
-                  if (project.hasProperty("android")) {
-                      extensions.configure<com.android.build.gradle.BaseExtension>("android") {
-                          compileSdkVersion(37)
-                          defaultConfig {
-                              minSdk = 24
-                          }
+              plugins.withId("com.android.library") {
+                  extensions.configure<com.android.build.gradle.LibraryExtension>("android") {
+                      compileSdk = 37
+                      defaultConfig {
+                          minSdk = 24
                       }
                   }
               }
@@ -45,4 +43,3 @@ jobs:
         with:
           name: my-imo-app-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
-          
