@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   zego_uikit_prebuilt_call: 4.16.22
-  zego_uikit_prebuilt_live_audio_room: 3.12.7
+  zego_uikit_prebuilt_live_audio_room: 3.15.0
 
 dev_dependencies:
   flutter_test:
