@@ -17,7 +17,7 @@ jobs:
         with:
           flutter-version: '3.24.5'
       - name: Create Android Project Files
-        run: flutter create .
+        run: flutter create --project-name my_imo_app .
       - name: Get Dependencies
         run: flutter pub get
       - name: Configure Android SDK 34 & Fix JCenter
