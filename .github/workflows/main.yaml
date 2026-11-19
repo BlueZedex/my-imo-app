@@ -1,27 +1,22 @@
-name: Build Android APK
+name: my_imo_app
+description: Audio Video Calling and Live Voice Room App
+publish_to: 'none'
+version: 1.0.0+1
 
-on:
-  push:
-    branches: [ main, master ]
-  workflow_dispatch:
+environment:
+  sdk: ">=3.2.0 <4.0.0"
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-      - name: Create Android Project Files
-        run: flutter create .
-      - name: Get Dependencies
-        run: flutter pub get
-      - name: Build APK
-        run: flutter build apk --release
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: my-imo-app-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
-          
+dependencies:
+  flutter:
+    sdk: flutter
+  zego_uikit_prebuilt_call: ^4.16.22
+  zego_uikit_prebuilt_live_audio_room: ^3.12.7
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  
