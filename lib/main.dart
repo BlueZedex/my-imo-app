@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_prebuilt_live_audio_room/zego_uikit_prebuilt_live_audio_room.dart';
 
-// 
+
 const int yourAppID = 1369564417;
-const String yourAppSign = "c143da3a114cb0b04113cf278f34939b0f6c08b775b54405d6e63fc9d6d7e878";
+const String yourAppSign = "https://console.firebase.google.com/project/my-imo-app-9a014/database/my-imo-app-9a014-default-rtdb/data/~2F?fb_gclid=Cj0KCQiAtvXXBhC2ARIsAJc8SURYjJVn6OKpipnzhoCz3R_811896XgUeEmNzslh0qRUgnH8YsJcOnkaAtbrEALw_wcB&fb_utm_campaign=Cloud-SS-DR-Firebase-FY26-global-gsem-1713590&fb_utm_content=text-ad&fb_utm_medium=cpc&fb_utm_source=google&fb_utm_term=KW_firebase%20spark%20plan";
+
 void main() {
   runApp(const MyImoApp());
 }
@@ -22,7 +23,6 @@ class MyImoApp extends StatelessWidget {
     );
   }
 }
-
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -46,12 +46,12 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             const Icon(Icons.video_call, size: 90, color: Colors.blue),
             const SizedBox(height: 10),
-            const Text("Welcome", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+            const Text("স্বাগতম", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
             const SizedBox(height: 30),
             TextField(
               controller: nameController,
               decoration: const InputDecoration(
-                labelText: "Enter Your Name",
+                labelText: "আপনার নাম লিখুন",
                 border: OutlineInputBorder(),
               ),
             ),
@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: phoneController,
               keyboardType: TextInputType.phone,
               decoration: const InputDecoration(
-                labelText: "Enter Your Number ,
+                labelText: "ফোন নাম্বার দিন",
                 border: OutlineInputBorder(),
               ),
             ),
@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   }
                 },
-                child: const Text("Loging", style: TextStyle(fontSize: 18)),
+                child: const Text("লগইন করুন", style: TextStyle(fontSize: 18)),
               ),
             )
           ],
@@ -103,7 +103,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int diamonds = 50; // Free Get Firt 50 Diamond
+  int diamonds = 50;
   final TextEditingController callIdController = TextEditingController(text: "1001");
   final TextEditingController roomIdController = TextEditingController(text: "5001");
 
@@ -111,12 +111,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hello, ${widget.userName}"),
+        title: Text("হ্যালো, ${widget.userName}"),
         actions: [
           TextButton.icon(
-            onPressed: () => _showDiamondRechargeDialog(),
+            onPressed: _showDiamondRechargeDialog,
             icon: const Icon(Icons.diamond, color: Colors.amber),
-            label: Text("$diamonds", style: const TextStyle(color: Colors.white, fontSize: 16)),
+            label: Text("$diamonds", style: const TextStyle(color: Colors.black, fontSize: 16)),
           )
         ],
       ),
@@ -125,7 +125,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // অডিও ও ভিডিও কল সেকশন
             Card(
               elevation: 3,
               child: Padding(
@@ -138,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     TextField(
                       controller: callIdController,
                       decoration: const InputDecoration(
-                        labelText: "কল আইডি বা গ্রুপ কোড দিন (যেমন: 1001)",
+                        labelText: "কল আইডি দিন (যেমন: 1001)",
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -186,8 +185,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(height: 20),
-
-            // লাইভ ভয়েস ক্লাব সেকশন
             Card(
               elevation: 3,
               child: Padding(
@@ -210,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Expanded(
                           child: ElevatedButton.icon(
                             icon: const Icon(Icons.mic),
-                            label: const Text("হোস্ট হিসেবে শুরু করুন"),
+                            label: const Text("হোস্ট"),
                             style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
                             onPressed: () {
                               Navigator.push(context, MaterialPageRoute(
@@ -228,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Expanded(
                           child: OutlinedButton.icon(
                             icon: const Icon(Icons.headset),
-                            label: const Text("শ্রোতা হিসেবে যোগ দিন"),
+                            label: const Text("শ্রোতা"),
                             onPressed: () {
                               Navigator.push(context, MaterialPageRoute(
                                 builder: (context) => VoiceRoomPage(
@@ -248,9 +245,16 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(height: 20),
-
-            // ডায়মন্ড রিচার্জ বাটন
             SizedBox(
               width: double.infinity,
               height: 55,
-              
+              child: ElevatedButton.icon(
+                icon: const Icon(Icons.diamond, color: Colors.amber),
+                label: const Text("ডায়মন্ড রিচার্জ করুন", style: TextStyle(fontSize: 18)),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.orange.shade800),
+                onPressed: _showDiamondRechargeDialog,
+              ),
+            ),
+          ],
+        ),
+        
